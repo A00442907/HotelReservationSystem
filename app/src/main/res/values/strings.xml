@@ -1,3 +1,16 @@
 <resources>
     <string name="app_name">HotelReservationSystem</string>
+    <string name="welcome_message">Welcome to Hotel Reservation System</string>
+    <string name="check_in_date">Check In Date</string>
+    <string name="check_out_date">Check Out Date</string>
+    <string name="retrieve_shared_pref">Retrieve From Shared Pref</string>
+    <string name="clear">Clear</string>
+    <string name="search">SEARCH</string>
+    <string name="confirm_search">CONFIRM MY SEARCH</string>
+    <string name="enter_your_name">Enter Your Name</string>
+    <string name="number_of_guests">Number of Guests</string>
+    <string name="confirmation_message">\"We will be happy to serve you, Your Confirmation Number is: \"</string>
+    <string name="selected_hotel">\"You have selected \"</string>
+    <string name="enter_Guest_details">"Please enter the Guest details"</string>
+    <string name="welcome_user_message">Welcome User, displaying hotel for</string>
 </resources>
