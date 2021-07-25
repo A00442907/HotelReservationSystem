@@ -170,21 +170,4 @@ public class HotelSearchFragment extends Fragment {
 
         return formattedDate;
     }
-
-
-    // Function to get the date object
-//    private String getDateFromCalendar(){
-//        int day = checkInDatePicker.getDayOfMonth();
-//        int month = checkInDatePicker.getMonth();
-//        int year = checkInDatePicker.getYear();
-//
-//        Calendar calendar = Calendar.getInstance();
-//        calendar.set(year,month,day);
-//
-//        SimpleDateFormat simpleDateFormat = new SimpleDateFormat("dd-MM-yyyy");
-//        String formattedDate = simpleDateFormat.format(calendar.getTime());
-//
-//        return formattedDate;
-//    }
-
 }

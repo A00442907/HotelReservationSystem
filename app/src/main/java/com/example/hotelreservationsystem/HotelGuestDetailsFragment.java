@@ -143,7 +143,6 @@ public class HotelGuestDetailsFragment extends Fragment {
         });
     }
 
-
     private void setupRecyclerView() {
         sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         int guestNumber = 0;

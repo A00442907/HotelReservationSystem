@@ -8,7 +8,8 @@ public class Api {
 
         // change your base URL
         RestAdapter adapter = new RestAdapter.Builder()
-                .setEndpoint("http://a00445457hotelreservation-env.eba-ymyy8p6r.us-east-1.elasticbeanstalk.com/") //Set the Root URL
+                //.setEndpoint("https://projectmcda5550.azurewebsites.net/api/")
+                .setEndpoint("https://a00445457hotelreservation-env.eba-ymyy8p6r.us-east-1.elasticbeanstalk.com/")//Set the Root URL
                 .build(); //Finally building the adapter
         // http://Hotelreservation-env.eba-ttkjmbqa.us-east-1.elasticbeanstalk.com/hotelList
 

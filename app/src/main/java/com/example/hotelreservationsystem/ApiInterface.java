@@ -13,6 +13,7 @@ import retrofit.mime.TypedInput;
 public interface ApiInterface {
 
     // API's endpoints - get API endpoint
+    //@GET("/getListOfHotels?code=E5wzeKm2/5kiQcykTaYo7itDMaW4j5w5bkPRsP6T6lpa3zX8WsMJXw==")
     @GET("/hotellist")
     public void getHotelsLists(Callback<List<HotelListData>> callback);
 
