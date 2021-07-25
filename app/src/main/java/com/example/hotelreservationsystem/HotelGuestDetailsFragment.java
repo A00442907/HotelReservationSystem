@@ -1,5 +1,6 @@
 package com.example.hotelreservationsystem;
 
+import android.annotation.SuppressLint;
 import android.content.Context;
 import android.content.SharedPreferences;
 import android.os.Build;
@@ -24,7 +25,8 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import java.io.UnsupportedEncodingException;
+import java.nio.charset.StandardCharsets;
+import java.util.Objects;
 
 import retrofit.Callback;
 import retrofit.RetrofitError;
@@ -35,7 +37,7 @@ import retrofit.mime.TypedInput;
 public class HotelGuestDetailsFragment extends Fragment {
 
     View view;
-    SharedPreferences sharedPreferences;
+    SharedPreferences sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(myPreference, Context.MODE_PRIVATE);
     public static final String myPreference = "myPref";
     public static final String guestsCount = "guestsCount";
     public static final String checkIn = "checkIn";
@@ -53,6 +55,7 @@ public class HotelGuestDetailsFragment extends Fragment {
         return view;
     }
 
+    @SuppressLint("SetTextI18n")
     @Override
     public void onViewCreated(@NonNull View view, @Nullable Bundle savedInstanceState) {
         super.onViewCreated(view, savedInstanceState);
@@ -64,7 +67,7 @@ public class HotelGuestDetailsFragment extends Fragment {
             hotelName = getArguments().getString("hotel name");
             hotelPrice = getArguments().getString("hotel price");
             hotelAvailability = getArguments().getString("hotel availability");
-            hotelRecapTextView.setText(getString(R.string.selected_hotel) + hotelName + ". The cost will be $ " + hotelPrice + " and availability is " + hotelAvailability);
+            hotelRecapTextView.setText(getString(R.string.selected_hotel) + hotelName + getString(R.string.cost_string) + hotelPrice + getString(R.string.availability_string) + hotelAvailability);
         }
         setupRecyclerView();
         send.setOnClickListener(new View.OnClickListener() {
@@ -75,21 +78,25 @@ public class HotelGuestDetailsFragment extends Fragment {
             @RequiresApi(api = Build.VERSION_CODES.M)
             @Override
             public void onClick(View v) {
-                sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+                sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(myPreference, Context.MODE_PRIVATE);
                 recyclerView = view.findViewById(R.id.guest_list_recyclerView);
                 JSONArray array = new JSONArray();
 
                 for (int i = 0; i < (lineLayoutManager.getItemCount()); i++) {
                     View firstViewItem = lineLayoutManager.findViewByPosition(i);
-                    EditText guestName = firstViewItem.findViewById(R.id.guestName);
-                    EditText guestGender = firstViewItem.findViewById(R.id.gender);
+                    EditText guestName = firstViewItem != null ? firstViewItem.findViewById(R.id.guestName) : null;
+                    EditText guestGender = firstViewItem != null ? firstViewItem.findViewById(R.id.gender) : null;
                     obj = new JSONObject();
-                    if (guestName.getText().toString().isEmpty() && guestGender.getText().toString().isEmpty()) {
+                    if (Objects.requireNonNull(guestName).getText().toString().isEmpty() && guestGender.getText().toString().isEmpty()) {
                         Toast.makeText(getActivity(), "Please enter the Guest details", Toast.LENGTH_LONG).show();
                         viewFlag = 1;
                     } else {
                         try {
                             obj.put("guest_name", guestName.getText().toString());
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                        try {
                             obj.put("gender", guestGender.getText().toString());
                         } catch (JSONException e) {
                             e.printStackTrace();
@@ -107,11 +114,9 @@ public class HotelGuestDetailsFragment extends Fragment {
                         obj.put("checkout", sharedPreferences.getString(checkOut, ""));
                     }
                     obj.put("guests_list", array);
-                    in = new TypedByteArray("application/json", obj.toString().getBytes("UTF-8"));
+                    in = new TypedByteArray("application/json", obj.toString().getBytes(StandardCharsets.UTF_8));
 
                 } catch (JSONException e) {
-                    e.printStackTrace();
-                } catch (UnsupportedEncodingException e) {
                     e.printStackTrace();
                 }
                 if (viewFlag == 0) {
@@ -120,31 +125,37 @@ public class HotelGuestDetailsFragment extends Fragment {
                         @Override
                         public void success(ConfirmationNumber confirmation_number, Response response) {
                             Bundle bundle = new Bundle();
-                            bundle.putString("confirmation number", confirmation_number.getconfirmation_number());
+                            bundle.putString(getString(R.string.confirmation_number), confirmation_number.getconfirmation_number());
                             GuestAddedFragment guestAddedFragment = new GuestAddedFragment();
                             guestAddedFragment.setArguments(bundle);
 
-                            FragmentTransaction fragmentTransaction = getFragmentManager().beginTransaction();
-                            fragmentTransaction.replace(R.id.main_layout, guestAddedFragment);
-                            fragmentTransaction.remove(HotelGuestDetailsFragment.this);
-                            fragmentTransaction.addToBackStack(null);
-                            fragmentTransaction.commit();
+                            FragmentTransaction fragmentTransaction = getFragmentManager() != null ? getFragmentManager().beginTransaction() : null;
+                            if (fragmentTransaction != null) {
+                                fragmentTransaction.replace(R.id.main_layout, guestAddedFragment);
+                            }
+                            if (fragmentTransaction != null) {
+                                fragmentTransaction.remove(HotelGuestDetailsFragment.this);
+                            }
+                            if (fragmentTransaction != null) {
+                                fragmentTransaction.addToBackStack(null);
+                            }
+                            if (fragmentTransaction != null) {
+                                fragmentTransaction.commit();
+                            }
                         }
 
                         @Override
                         public void failure(RetrofitError error) {
-                            // if error occurs in network transaction then we can get the error in this method.
                             Toast.makeText(getActivity(), error.toString(), Toast.LENGTH_LONG).show();
                         }
                     });
-
                 }
             }
         });
     }
 
     private void setupRecyclerView() {
-        sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+        sharedPreferences = Objects.requireNonNull(getActivity()).getSharedPreferences(myPreference, Context.MODE_PRIVATE);
         int guestNumber = 0;
         if (sharedPreferences.contains(guestsCount)) {
             guestNumber = Integer.parseInt(sharedPreferences.getString(guestsCount, ""));

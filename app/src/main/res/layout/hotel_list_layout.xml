@@ -41,7 +41,7 @@
             app:layout_constraintTop_toTopOf="@id/hotel_name_text_view"
             app:layout_constraintBottom_toBottomOf="@id/price_text_view"
             app:layout_constraintEnd_toEndOf="parent"
-            android:text="Price"
+            android:text="@string/price"
             android:layout_marginRight="10dp"
             android:textSize="20sp"
             android:textColor="@color/black"/>

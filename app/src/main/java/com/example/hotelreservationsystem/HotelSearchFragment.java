@@ -72,28 +72,25 @@ public class HotelSearchFragment extends Fragment {
         titleTextView.setText(R.string.welcome_message);
 
         //Set up the text of confirm text box
-        confirmSearchButton.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                checkInDate = getDateFromCalendar(checkInDatePicker);
-                checkOutDate = getDateFromCalendar(checkOutDatePicker);
-                //Get input of guests count
-                numberOfGuests = guestsCountEditText.getText().toString();
-                guestName = nameEditText.getText().toString();
+        confirmSearchButton.setOnClickListener(v -> {
+            checkInDate = getDateFromCalendar(checkInDatePicker);
+            checkOutDate = getDateFromCalendar(checkOutDatePicker);
+            //Get input of guests count
+            numberOfGuests = guestsCountEditText.getText().toString();
+            guestName = nameEditText.getText().toString();
 
 
-                // Saving into shared preferences
-                sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
-                SharedPreferences.Editor editor = sharedPreferences.edit();
-                editor.putString(name, guestName);
-                editor.putString(guestsCount, numberOfGuests);
-                editor.commit();
+            // Saving into shared preferences
+            sharedPreferences = getActivity().getSharedPreferences(myPreference, Context.MODE_PRIVATE);
+            SharedPreferences.Editor editor = sharedPreferences.edit();
+            editor.putString(name, guestName);
+            editor.putString(guestsCount, numberOfGuests);
+            editor.commit();
 
 
 
-                searchTextConfirmationTextView.setText("Dear Customer, Your check in date is " + checkInDate + ", " +
-                        "your checkout date is " + checkOutDate + ".The number of guests are " + numberOfGuests);
-            }
+            searchTextConfirmationTextView.setText(getString(R.string.check_date_Selected) + checkInDate + getString(R.string.char_comma) +
+                    getString(R.string.checkout_date) + checkOutDate + getString(R.string.number_of_guest) + numberOfGuests);
         });
 
         //Search Button click Listener
@@ -111,9 +108,9 @@ public class HotelSearchFragment extends Fragment {
                 editor.putString(checkOut, checkOutDate);
                 editor.commit();
                 Bundle bundle = new Bundle();
-                bundle.putString("check in date", checkInDate);
-                bundle.putString("check out date", checkOutDate);
-                bundle.putString("number of guests", numberOfGuests);
+                bundle.putString(getString(R.string.check_date), checkInDate);
+                bundle.putString(getString(R.string.check_out), checkOutDate);
+                bundle.putString(getString(R.string.number_guests), numberOfGuests);
 
 
                 // set Fragment class Arguments

@@ -13,4 +13,17 @@
     <string name="selected_hotel">\"You have selected \"</string>
     <string name="enter_Guest_details">"Please enter the Guest details"</string>
     <string name="welcome_user_message">Welcome User, displaying hotel for</string>
+    <string name="cost_string">\". The cost will be $ \"</string>
+    <string name="availability_string">\" and availability is \"</string>
+    <string name="confirmation_number">confirmation number</string>
+    <string name="check_date_Selected">\"Dear Customer, Your check in date is \"</string>
+    <string name="number_of_guest">\".The number of guests are \"</string>
+    <string name="char_comma">\", \"</string>
+    <string name="checkout_date">\"your checkout date is \"</string>
+    <string name="check_date">check in date</string>
+    <string name="check_out">check out date</string>
+    <string name="number_guests">number of guests</string>
+    <string name="guest_name">Guest Name:</string>
+    <string name="gender_">Gender:</string>
+    <string name="price">Price</string>
 </resources>
